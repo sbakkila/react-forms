@@ -23,8 +23,8 @@ export default class AppContainer extends Component {
     this.prev = this.prev.bind(this);
     this.selectAlbum = this.selectAlbum.bind(this);
     this.selectArtist = this.selectArtist.bind(this);
-    // this.updatePlaylists = this.updatePlaylists.bind(this);
     this.addPlaylist = this.addPlaylist.bind(this);
+    this.selectPlaylist = this.selectPlaylist.bind(this);
   }
 
   componentDidMount () {
@@ -128,22 +128,29 @@ export default class AppContainer extends Component {
     this.setState({ selectedArtist: artist });
   }
 
-  // updatePlaylists(playlists){
-  //   this.setState({
-  //     playlists: playlists
-  //   })
-  // }
+
 
   addPlaylist(playlist){
     axios.post('/api/playlists', {name: playlist})
-    .then((res) => res.data)
+    .then((res) =>  res.data)
     .then((playlist) => {
       this.setState({playlists: [...this.state.playlists, playlist]})
+      console.log('playlists ', this.state.playlists);
     })
-    // .then(()=>{
-    //   console.log(this.props)
-    //   this.props.updatePlaylists(this.props.playlists)
-    // })
+
+  }
+
+  selectPlaylist(playlistId){
+    console.log('id ', playlistId);
+    axios.get(`/api/playlists/${playlistId}`)
+    .then( (res) => res.data)
+    .then( (playlist) => {
+      console.log('inside axios ', playlist);
+      playlist.songs = playlist.songs.map(convertSong);
+      this.setState({selectedPlaylist: playlist})
+    })
+    .catch(console.log);
+
   }
 
   render () {
@@ -153,8 +160,10 @@ export default class AppContainer extends Component {
       toggle: this.toggle,
       selectAlbum: this.selectAlbum,
       selectArtist: this.selectArtist,
-      addPlaylist: this.addPlaylist
+      addPlaylist: this.addPlaylist,
+      selectPlaylist: this.selectPlaylist
     });
+    console.log("in appC render ", this.state.playlists);
 
     return (
       <div id="main" className="container-fluid">

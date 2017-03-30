@@ -31,6 +31,8 @@ export default class NewPlaylistContainer extends React.Component {
     event.preventDefault();
     const addPlaylist = this.props.addPlaylist;
     addPlaylist(this.state.playlist);
+    console.log('inside onSubmit ', this.state.playlist)
+
     //.then ( (newPlaylist) => {
     this.setState({playlist: '', initLoad: true});
     //})
