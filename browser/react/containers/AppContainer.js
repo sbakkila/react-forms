@@ -135,15 +135,15 @@ export default class AppContainer extends Component {
   // }
 
   addPlaylist(playlist){
-    axios.post('/api/playlists/', {name: playlist})
+    axios.post('/api/playlists', {name: playlist})
     .then((res) => res.data)
     .then((playlist) => {
       this.setState({playlists: [...this.state.playlists, playlist]})
     })
-    .then(()=>{
-      console.log(this.props)
-      this.props.updatePlaylists(this.props.playlists)
-    })
+    // .then(()=>{
+    //   console.log(this.props)
+    //   this.props.updatePlaylists(this.props.playlists)
+    // })
   }
 
   render () {
