@@ -15,6 +15,7 @@ const NewPlaylist = (props) => {
           <div className="form-group">
             <div className="col-xs-10 col-xs-offset-2">
               <button disabled={props.validation()} type="submit" className="btn btn-success" >Create Playlist</button>
+              {(props.validation() && !props.initLoad) && <div className="alert alert-warning">Please enter a valid name!!!</div>}
             </div>
           </div>
         </fieldset>
